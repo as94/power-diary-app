@@ -1,6 +1,8 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PowerDiary.Reports.Models", "PowerDiary.Reports.Models\PowerDiary.Reports.Models.csproj", "{9F79AC4A-7711-42A5-997B-36F6DA9A32CA}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{2601F6E2-BD2C-419A-91F3-06446AA1E6BC}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PowerDiary.Reports.Models", "src\PowerDiary.Reports.Models\PowerDiary.Reports.Models.csproj", "{B5979BAF-3CBE-4C7A-9EEC-063295FE7583}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -8,9 +10,12 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{9F79AC4A-7711-42A5-997B-36F6DA9A32CA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{9F79AC4A-7711-42A5-997B-36F6DA9A32CA}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{9F79AC4A-7711-42A5-997B-36F6DA9A32CA}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{9F79AC4A-7711-42A5-997B-36F6DA9A32CA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B5979BAF-3CBE-4C7A-9EEC-063295FE7583}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B5979BAF-3CBE-4C7A-9EEC-063295FE7583}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B5979BAF-3CBE-4C7A-9EEC-063295FE7583}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B5979BAF-3CBE-4C7A-9EEC-063295FE7583}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{B5979BAF-3CBE-4C7A-9EEC-063295FE7583} = {2601F6E2-BD2C-419A-91F3-06446AA1E6BC}
 	EndGlobalSection
 EndGlobal
