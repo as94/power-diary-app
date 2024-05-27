@@ -18,4 +18,13 @@ public sealed class UserLeftComment : IChatEvent
     public string Comment { get; }
     public DateTime CreatedAt { get; }
     public DateTime CreatedAtUtc { get; }
+    
+    public string ToString(Dictionary<Guid, string> userNamesById)
+    {
+        var userName = userNamesById.GetValueOrDefault(
+            UserId, 
+            "Undefined user");
+        
+        return $"{userName} comments: \"{Comment}\"";
+    }
 }

@@ -18,4 +18,17 @@ public sealed class UserGaveHighFive : IChatEvent
     public Guid RecipientId { get; }
     public DateTime CreatedAt { get; }
     public DateTime CreatedAtUtc { get; }
+    
+    public string ToString(Dictionary<Guid, string> userNamesById)
+    {
+        var userName = userNamesById.GetValueOrDefault(
+            UserId, 
+            "Undefined user");
+        
+        var recipientName = userNamesById.GetValueOrDefault(
+            RecipientId, 
+            "Undefined recipient");
+        
+        return $"{userName} high-fives {recipientName}";
+    }
 }
