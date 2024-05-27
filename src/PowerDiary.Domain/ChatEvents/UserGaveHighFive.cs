@@ -19,7 +19,7 @@ public sealed class UserGaveHighFive : IChatEvent
     public DateTime CreatedAt { get; }
     public DateTime CreatedAtUtc { get; }
     
-    public string GetLowGranularityReportString(Dictionary<Guid, string> userNamesById)
+    public string GetHighGranularityReportString(Dictionary<Guid, string> userNamesById)
     {
         var userName = userNamesById.GetValueOrDefault(
             UserId, 
@@ -32,5 +32,5 @@ public sealed class UserGaveHighFive : IChatEvent
         return $"{userName} high-fives {recipientName}";
     }
     
-    public string GetHighGranularityReportFormat => "{0} person high-fived .. other person";
+    public string GetLowGranularityReportFormat => "{0} person high-fived .. other person";
 }

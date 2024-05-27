@@ -13,7 +13,7 @@ public sealed class ChatEventsReporter : IChatEventsReporter
         _userRepository = userRepository;
     }
     
-    public async Task<HighGranularityReportContract> GetHighGranularityReportAsync(DateTime currentDate, CancellationToken ct)
+    public async Task<LowGranularityReportContract> GetLowGranularityReportAsync(DateTime currentDate, CancellationToken ct)
     {
         var events = (await _repository.GetEventsAsync(
                 currentDate.Date,
@@ -36,17 +36,17 @@ public sealed class ChatEventsReporter : IChatEventsReporter
                         var eventByType = groupByEventType.First();
                         var count = groupByEventType.Count();
 
-                        return string.Format(eventByType.GetHighGranularityReportFormat, count);
+                        return string.Format(eventByType.GetLowGranularityReportFormat, count);
                     });
 
-                return new HighGranularityReportEntryContract(formattedTime, messages.ToArray());
+                return new LowGranularityReportEntryContract(formattedTime, messages.ToArray());
             })
             .ToArray();
 
-        return new HighGranularityReportContract(rows);
+        return new LowGranularityReportContract(rows);
     }
 
-    public async Task<LowGranularityReportContract> GetLowGranularityReportAsync(DateTime currentDate, CancellationToken ct)
+    public async Task<HighGranularityReportContract> GetHighGranularityReportAsync(DateTime currentDate, CancellationToken ct)
     {
         var events = (await _repository.GetEventsAsync(
                 currentDate.Date,
@@ -62,14 +62,14 @@ public sealed class ChatEventsReporter : IChatEventsReporter
         var rows = events
             .Select(e =>
             {
-                var message = e.GetLowGranularityReportString(userNamesById);
+                var message = e.GetHighGranularityReportString(userNamesById);
                 
-                return new LowGranularityReportEntryContract(
+                return new HighGranularityReportEntryContract(
                     $"{e.CreatedAt:hh:mmtt}",
                     message);
             })
             .ToArray();
 
-        return new LowGranularityReportContract(rows);
+        return new HighGranularityReportContract(rows);
     }
 }

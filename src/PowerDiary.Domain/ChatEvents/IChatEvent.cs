@@ -8,6 +8,6 @@ public interface IChatEvent
     public DateTime CreatedAt { get; }
     public DateTime CreatedAtUtc { get; }
 
-    public string GetLowGranularityReportString(Dictionary<Guid, string> userNamesById);
-    public string GetHighGranularityReportFormat { get; }
+    public string GetHighGranularityReportString(Dictionary<Guid, string> userNamesById);
+    public string GetLowGranularityReportFormat { get; }
 }

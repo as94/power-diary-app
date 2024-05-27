@@ -1,13 +1,13 @@
 namespace PowerDiary.Domain.Reports.Contracts;
 
-public class HighGranularityReportEntryContract
+public sealed class HighGranularityReportEntryContract
 {
-    public HighGranularityReportEntryContract(string formatedTime, string[] messages)
+    public HighGranularityReportEntryContract(string formatedTime, string message)
     {
         FormatedTime = formatedTime;
-        Messages = messages;
+        Message = message;
     }
 
     public string FormatedTime { get; }
-    public string[] Messages { get; }
+    public string Message { get; }
 }
