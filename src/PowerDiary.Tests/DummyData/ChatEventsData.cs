@@ -4,7 +4,7 @@ namespace PowerDiary.Tests.DummyData;
 
 public static class ChatEventsData
 {
-    public static IChatEvent[] GetBunchOfEvents(
+    public static IChatEvent[] GetEventsForHighGranularity(
         Guid bobId,
         Guid kateId,
         Guid roomId,
@@ -78,5 +78,123 @@ public static class ChatEventsData
             kateLeftComment,
             kateLeftRoom
         ];
+    }
+
+    public static IChatEvent[] GetEventsForLowGranularity(Guid roomId, DateTime initialDateTime)
+    {
+        var eventsAtFirstHour = new IChatEvent[]
+        {
+            new UserEnteredRoom(
+                Guid.NewGuid(),
+                Guid.NewGuid(),
+                roomId,
+                initialDateTime.AddMinutes(2),
+                initialDateTime.AddMinutes(2)),
+            new UserLeftRoom(
+                Guid.NewGuid(),
+                Guid.NewGuid(),
+                roomId,
+                initialDateTime.AddMinutes(20),
+                initialDateTime.AddMinutes(20)),
+            new UserLeftRoom(
+                Guid.NewGuid(),
+                Guid.NewGuid(),
+                roomId,
+                initialDateTime.AddMinutes(35),
+                initialDateTime.AddMinutes(35)),
+            new UserGaveHighFive(
+                Guid.NewGuid(),
+                Guid.NewGuid(),
+                Guid.NewGuid(),
+                roomId,
+                initialDateTime.AddMinutes(40),
+                initialDateTime.AddMinutes(40)),
+            new UserLeftComment(
+                Guid.NewGuid(),
+                Guid.NewGuid(),
+                roomId,
+                "Some comment",
+                initialDateTime.AddMinutes(50),
+                initialDateTime.AddMinutes(50)),
+            new UserLeftComment(
+                Guid.NewGuid(),
+                Guid.NewGuid(),
+                roomId,
+                "Some comment",
+                initialDateTime.AddMinutes(55),
+                initialDateTime.AddMinutes(55))
+        };
+
+        var atSecondHour = initialDateTime.AddHours(1);
+        var user1GaveHighFiveId = Guid.NewGuid();
+        var user2GaveHighFiveId = Guid.NewGuid();
+
+        var eventsAtSecondHour = new IChatEvent[]
+        {
+            new UserEnteredRoom(
+                Guid.NewGuid(),
+                Guid.NewGuid(),
+                roomId,
+                atSecondHour.AddMinutes(2),
+                atSecondHour.AddMinutes(2)),
+            new UserEnteredRoom(
+                Guid.NewGuid(),
+                Guid.NewGuid(),
+                roomId,
+                atSecondHour.AddMinutes(2),
+                atSecondHour.AddMinutes(2)),
+            new UserEnteredRoom(
+                Guid.NewGuid(),
+                Guid.NewGuid(),
+                roomId,
+                atSecondHour.AddMinutes(3),
+                atSecondHour.AddMinutes(3)),
+            new UserGaveHighFive(
+                Guid.NewGuid(),
+                user1GaveHighFiveId,
+                roomId,
+                Guid.NewGuid(),
+                atSecondHour.AddMinutes(40),
+                atSecondHour.AddMinutes(40)),
+            new UserGaveHighFive(
+                Guid.NewGuid(),
+                user1GaveHighFiveId,
+                roomId,
+                Guid.NewGuid(),
+                atSecondHour.AddMinutes(40),
+                atSecondHour.AddMinutes(40)),
+            new UserGaveHighFive(
+                Guid.NewGuid(),
+                user1GaveHighFiveId,
+                roomId,
+                Guid.NewGuid(),
+                atSecondHour.AddMinutes(40),
+                atSecondHour.AddMinutes(40)),
+            new UserGaveHighFive(
+                Guid.NewGuid(),
+                user2GaveHighFiveId,
+                roomId,
+                Guid.NewGuid(),
+                atSecondHour.AddMinutes(50),
+                atSecondHour.AddMinutes(50)),
+            new UserGaveHighFive(
+                Guid.NewGuid(),
+                user2GaveHighFiveId,
+                roomId,
+                Guid.NewGuid(),
+                atSecondHour.AddMinutes(50),
+                atSecondHour.AddMinutes(50)),
+        }
+        .Union(Enumerable.Range(0, 15).Select(x => new UserLeftComment(
+            Guid.NewGuid(),
+            Guid.NewGuid(),
+            roomId,
+            $"Some comment {x}",
+            atSecondHour.AddMinutes(50),
+            atSecondHour.AddMinutes(50))));
+        
+        return eventsAtFirstHour
+            .Union(eventsAtSecondHour)
+            .ToArray();
     }
 }

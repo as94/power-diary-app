@@ -32,5 +32,10 @@ public sealed class UserGaveHighFive : IChatEvent
         return $"{userName} high-fives {recipientName}";
     }
     
-    public string GetLowGranularityReportFormat => "{0} person high-fived .. other person";
+    public string GetLowGranularityReportFormat(int count)
+    {
+        return count == 1
+            ? "1 person high-fived {0} other person"
+            : "1 person high-fived {0} other people";
+    }
 }

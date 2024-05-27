@@ -35,7 +35,7 @@ public class ChatEventsReporterTests
             new User(bobId, "Bob"),
             new User(kateId, "Kate")
         }, CancellationToken.None);
-        var chatEvents = ChatEventsData.GetBunchOfEvents(bobId, kateId, roomId, initialDateTime);
+        var chatEvents = ChatEventsData.GetEventsForHighGranularity(bobId, kateId, roomId, initialDateTime);
         await _chatEventsRepository.AddRangeAsync(chatEvents, CancellationToken.None);
 
         var report =
@@ -56,18 +56,11 @@ public class ChatEventsReporterTests
     }
 
     [Test]
-    public async Task WhenHaveUsersAndChatEventsCanGetReportWithLowGranularity()
+    public async Task WhenHaveChatEventsCanGetReportWithLowGranularity()
     {
         var roomId = Guid.NewGuid();
-        var bobId = Guid.NewGuid();
-        var kateId = Guid.NewGuid();
         var initialDateTime = DateTime.Today.Add(TimeSpan.FromHours(17));
-        await _userRepository.AddRangeAsync(new []
-        {
-            new User(bobId, "Bob"),
-            new User(kateId, "Kate")
-        }, CancellationToken.None);
-        var chatEvents = ChatEventsData.GetBunchOfEvents(bobId, kateId, roomId, initialDateTime);
+        var chatEvents = ChatEventsData.GetEventsForLowGranularity(roomId, initialDateTime);
         await _chatEventsRepository.AddRangeAsync(chatEvents, CancellationToken.None);
 
         var report =
@@ -79,10 +72,17 @@ public class ChatEventsReporterTests
         [
             new LowGranularityReportEntryContract("05:00PM",
             [
-                "2 person entered",
+                "1 person entered",
+                "2 left",
+                "1 person high-fived 1 other person",
                 "2 comments",
-                "1 person high-fived .. other person",
-                "2 left"
+            ]),
+            new LowGranularityReportEntryContract("06:00PM",
+            [
+                "3 people entered",
+                "1 person high-fived 3 other people",
+                "1 person high-fived 2 other people",
+                "15 comments"
             ])
         ]));
     }

@@ -25,7 +25,7 @@ public class ChatEventsRepositoryTests
         var bobId = Guid.NewGuid();
         var kateId = Guid.NewGuid();
         var initialDateTime = DateTime.Today.Add(TimeSpan.FromHours(17));
-        var chatEvents = ChatEventsData.GetBunchOfEvents(bobId, kateId, roomId, initialDateTime);
+        var chatEvents = ChatEventsData.GetEventsForHighGranularity(bobId, kateId, roomId, initialDateTime);
         await _repository.AddRangeAsync(chatEvents, CancellationToken.None);
         
         var filteredEvents = await _repository.GetEventsAsync(

@@ -26,5 +26,5 @@ public sealed class UserLeftRoom : IChatEvent
         return $"{userName} leaves";
     }
     
-    public string GetLowGranularityReportFormat => "{0} left";
+    public string GetLowGranularityReportFormat(int count) => "{0} left";
 }

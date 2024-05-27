@@ -1,3 +1,4 @@
+using PowerDiary.Domain.ChatEvents;
 using PowerDiary.Domain.Reports.Contracts;
 
 namespace PowerDiary.Domain.Reports;
@@ -27,16 +28,41 @@ public sealed class ChatEventsReporter : IChatEventsReporter
             .Select(groupByHour =>
             {
                 var eventByHour = groupByHour.First();
-                var formattedTime = $"{eventByHour.CreatedAt:hh:mmtt}";
+                var hourDateTime = new DateTime(
+                    eventByHour.CreatedAt.Year,
+                    eventByHour.CreatedAt.Month,
+                    eventByHour.CreatedAt.Day,
+                    eventByHour.CreatedAt.Hour, 
+                    0, 
+                    0);
+                var formattedTime = $"{hourDateTime:hh:mmtt}";
 
                 var messages = groupByHour
                     .GroupBy(e => e.GetType().FullName)
-                    .Select(groupByEventType =>
+                    .SelectMany(groupByEventType =>
                     {
                         var eventByType = groupByEventType.First();
+                        
+                        if (groupByEventType.Key == typeof(UserGaveHighFive).FullName)
+                        {
+                            var highFiveMessagesByUserId = groupByEventType
+                                .GroupBy(e => e.UserId);
+
+                            var highFiveMessages = highFiveMessagesByUserId
+                                .Select(e =>
+                                {
+                                    var highFiveRecipientsCount = e.Count();
+                                    return string.Format(
+                                        eventByType.GetLowGranularityReportFormat(highFiveRecipientsCount),
+                                        highFiveRecipientsCount);
+                                });
+                            
+                            return highFiveMessages;
+                        }
+                        
                         var count = groupByEventType.Count();
 
-                        return string.Format(eventByType.GetLowGranularityReportFormat, count);
+                        return [string.Format(eventByType.GetLowGranularityReportFormat(count), count)];
                     });
 
                 return new LowGranularityReportEntryContract(formattedTime, messages.ToArray());
