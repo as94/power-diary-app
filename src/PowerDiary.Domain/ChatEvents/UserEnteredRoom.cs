@@ -17,7 +17,7 @@ public sealed class UserEnteredRoom : IChatEvent
     public DateTime CreatedAt { get; }
     public DateTime CreatedAtUtc { get; }
     
-    public string ToString(Dictionary<Guid, string> userNamesById)
+    public string GetLowGranularityReportString(Dictionary<Guid, string> userNamesById)
     {
         var userName = userNamesById.GetValueOrDefault(
             UserId, 
@@ -25,4 +25,6 @@ public sealed class UserEnteredRoom : IChatEvent
         
         return $"{userName} enters the room";
     }
+
+    public string GetHighGranularityReportFormat => "{0} person entered";
 }

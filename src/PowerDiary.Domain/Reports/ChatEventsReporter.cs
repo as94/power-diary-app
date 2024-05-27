@@ -13,9 +13,37 @@ public sealed class ChatEventsReporter : IChatEventsReporter
         _userRepository = userRepository;
     }
     
-    public Task<HighGranularityReportContract> GetHighGranularityReportAsync(DateTime currentDate, CancellationToken ct)
+    public async Task<HighGranularityReportContract> GetHighGranularityReportAsync(DateTime currentDate, CancellationToken ct)
     {
-        throw new NotImplementedException();
+        var events = (await _repository.GetEventsAsync(
+                currentDate.Date,
+                currentDate.Date.AddDays(1),
+                ct))
+            .OrderBy(x => x.CreatedAt)
+            .ToArray();
+
+        var rows = events
+            .GroupBy(e => e.CreatedAt.Hour)
+            .Select(groupByHour =>
+            {
+                var eventByHour = groupByHour.First();
+                var formattedTime = $"{eventByHour.CreatedAt:hh:mmtt}";
+
+                var messages = groupByHour
+                    .GroupBy(e => e.GetType().FullName)
+                    .Select(groupByEventType =>
+                    {
+                        var eventByType = groupByEventType.First();
+                        var count = groupByEventType.Count();
+
+                        return string.Format(eventByType.GetHighGranularityReportFormat, count);
+                    });
+
+                return new HighGranularityReportEntryContract(formattedTime, messages.ToArray());
+            })
+            .ToArray();
+
+        return new HighGranularityReportContract(rows);
     }
 
     public async Task<LowGranularityReportContract> GetLowGranularityReportAsync(DateTime currentDate, CancellationToken ct)
@@ -34,7 +62,7 @@ public sealed class ChatEventsReporter : IChatEventsReporter
         var rows = events
             .Select(e =>
             {
-                var message = e.ToString(userNamesById);
+                var message = e.GetLowGranularityReportString(userNamesById);
                 
                 return new LowGranularityReportEntryContract(
                     $"{e.CreatedAt:hh:mmtt}",

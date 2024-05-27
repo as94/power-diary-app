@@ -19,7 +19,7 @@ public sealed class UserLeftComment : IChatEvent
     public DateTime CreatedAt { get; }
     public DateTime CreatedAtUtc { get; }
     
-    public string ToString(Dictionary<Guid, string> userNamesById)
+    public string GetLowGranularityReportString(Dictionary<Guid, string> userNamesById)
     {
         var userName = userNamesById.GetValueOrDefault(
             UserId, 
@@ -27,4 +27,6 @@ public sealed class UserLeftComment : IChatEvent
         
         return $"{userName} comments: \"{Comment}\"";
     }
+    
+    public string GetHighGranularityReportFormat => "{0} comments";
 }
