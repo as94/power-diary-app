@@ -1,4 +1,5 @@
 ﻿using PowerDiary.Domain;
+using PowerDiary.Domain.ChatEvents;
 using PowerDiary.Domain.Models;
 
 namespace PowerDiary.Repositories.Fake;

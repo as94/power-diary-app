@@ -1,13 +1,12 @@
-namespace PowerDiary.Domain.Models;
+namespace PowerDiary.Domain.ChatEvents;
 
-public sealed class SomeoneGaveHighFive : IChatEvent
+public sealed class UserEnteredRoom : IChatEvent
 {
-    public SomeoneGaveHighFive(Guid eventId, Guid userId, Guid roomId, Guid[] recipientIds, DateTime createdAt, DateTime createdAtUtc)
+    public UserEnteredRoom(Guid eventId, Guid userId, Guid roomId, DateTime createdAt, DateTime createdAtUtc)
     {
         EventId = eventId;
         UserId = userId;
         RoomId = roomId;
-        RecipientIds = recipientIds;
         CreatedAt = createdAt;
         CreatedAtUtc = createdAtUtc;
     }
@@ -15,7 +14,6 @@ public sealed class SomeoneGaveHighFive : IChatEvent
     public Guid EventId { get; }
     public Guid UserId { get; }
     public Guid RoomId { get; }
-    public Guid[] RecipientIds { get; }
     public DateTime CreatedAt { get; }
     public DateTime CreatedAtUtc { get; }
 }
