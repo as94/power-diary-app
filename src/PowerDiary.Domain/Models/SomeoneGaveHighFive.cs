@@ -1,4 +1,4 @@
-namespace PowerDiary.Models;
+namespace PowerDiary.Domain.Models;
 
 public sealed class SomeoneGaveHighFive : IChatEvent
 {
@@ -10,11 +10,6 @@ public sealed class SomeoneGaveHighFive : IChatEvent
         RecipientIds = recipientIds;
         CreatedAt = createdAt;
         CreatedAtUtc = createdAtUtc;
-    }
-    
-    public SomeoneGaveHighFive(Guid eventId, Guid userId, Guid roomId, DateTime createdAt, DateTime createdAtUtc)
-        : this(eventId, userId, roomId, [], createdAt, createdAtUtc)
-    {
     }
 
     public Guid EventId { get; }

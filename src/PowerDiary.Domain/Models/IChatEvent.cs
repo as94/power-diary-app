@@ -1,4 +1,4 @@
-namespace PowerDiary.Models;
+namespace PowerDiary.Domain.Models;
 
 public interface IChatEvent
 {

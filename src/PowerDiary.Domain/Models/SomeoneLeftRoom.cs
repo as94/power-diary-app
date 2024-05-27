@@ -1,8 +1,8 @@
-namespace PowerDiary.Models;
+namespace PowerDiary.Domain.Models;
 
-public sealed class SomeoneEnteredRoom : IChatEvent
+public sealed class SomeoneLeftRoom : IChatEvent
 {
-    public SomeoneEnteredRoom(Guid eventId, Guid userId, Guid roomId, DateTime createdAt, DateTime createdAtUtc)
+    public SomeoneLeftRoom(Guid eventId, Guid userId, Guid roomId, DateTime createdAt, DateTime createdAtUtc)
     {
         EventId = eventId;
         UserId = userId;
