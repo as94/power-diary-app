@@ -1,9 +1,5 @@
-version: '3.8'
-
 services:
-  mysql:
-    hostname: localhost
-    container_name: powerdiary-database
+  db:
     image: mysql:8.0
     environment:
       MYSQL_ROOT_HOST: '%'
@@ -11,3 +7,31 @@ services:
       MYSQL_DATABASE: powerdiary
     ports:
       - "3306:3306"
+    volumes:
+      - db_data:/var/lib/mysql
+      
+  webapp:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ConnectionStrings__PowerDiary=Server=db;Database=powerdiary;User=root;SSL Mode=None;Allow User Variables=True;
+    depends_on:
+      - db
+    ports:
+      - "5010:8080"
+
+  migrator:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    entrypoint: [ "dotnet", "PowerDiary.Web.dll", "--update-database" ]
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ConnectionStrings__PowerDiary=Server=db;Database=powerdiary;User=root;SSL Mode=None;Allow User Variables=True;
+    depends_on:
+      - db
+        
+volumes:
+  db_data:
