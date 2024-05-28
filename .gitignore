@@ -23,10 +23,8 @@ build
 
 
 #allow build scripts and dependant tools/*
-dist
 typings
 .coverage
-lib
 #allow Nuget
 ![Nn]uget.exe
 #allow daemon
