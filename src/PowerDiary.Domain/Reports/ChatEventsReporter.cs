@@ -45,24 +45,13 @@ public sealed class ChatEventsReporter : IChatEventsReporter
                         
                         if (groupByEventType.Key == typeof(UserGaveHighFive).FullName)
                         {
-                            var highFiveMessagesByUserId = groupByEventType
-                                .GroupBy(e => e.UserId);
-
-                            var highFiveMessages = highFiveMessagesByUserId
-                                .Select(e =>
-                                {
-                                    var highFiveRecipientsCount = e.Count();
-                                    return string.Format(
-                                        eventByType.GetLowGranularityReportFormat(highFiveRecipientsCount),
-                                        highFiveRecipientsCount);
-                                });
-                            
-                            return highFiveMessages;
+                            return groupByEventType
+                                .GroupBy(e => e.UserId)
+                                .Select(e => eventByType
+                                    .GetLowGranularityReportString(e.Count()));
                         }
-                        
-                        var count = groupByEventType.Count();
 
-                        return [string.Format(eventByType.GetLowGranularityReportFormat(count), count)];
+                        return [eventByType.GetLowGranularityReportString(groupByEventType.Count())];
                     });
 
                 return new LowGranularityReportEntryContract(formattedTime, messages.ToArray());

@@ -26,10 +26,10 @@ public sealed class UserEnteredRoom : IChatEvent
         return $"{userName} enters the room";
     }
 
-    public string GetLowGranularityReportFormat(int count)
+    public string GetLowGranularityReportString(int count)
     {
         return count == 1
-            ? "{0} person entered"
-            : "{0} people entered";
+            ? $"{count} person entered"
+            : $"{count} people entered";
     }
 }

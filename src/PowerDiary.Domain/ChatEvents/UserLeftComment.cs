@@ -28,5 +28,5 @@ public sealed class UserLeftComment : IChatEvent
         return $"{userName} comments: \"{Comment}\"";
     }
     
-    public string GetLowGranularityReportFormat(int count) => "{0} comments";
+    public string GetLowGranularityReportString(int count) => $"{count} comments";
 }
