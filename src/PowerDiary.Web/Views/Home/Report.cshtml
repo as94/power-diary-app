@@ -42,30 +42,37 @@
     <div class="container mt-5">
         <h1 class="mb-4">Low Granularity Report</h1>
         <p><b>Date:</b> @Model.SelectedDate.ToShortDateString()</p>
-        <table class="table table-bordered">
-            <thead class="thead-dark">
-            <tr>
-                <th>Time</th>
-                <th>Messages</th>
-            </tr>
-            </thead>
-            <tbody>
-            @foreach (var entry in Model.LowGranularityReport.Rows)
-            {
+        @if (Model.LowGranularityReport.Rows.Length == 0)
+        {
+            <p>No rows</p>
+        }
+        else
+        {
+            <table class="table table-bordered">
+                <thead class="thead-dark">
                 <tr>
-                    <td>@entry.FormatedTime</td>
-                    <td>
-                        <ul>
-                            @foreach (var message in entry.Messages)
-                            {
-                                <li>@message</li>
-                            }
-                        </ul>
-                    </td>
+                    <th>Time</th>
+                    <th>Messages</th>
                 </tr>
-            }
-            </tbody>
-        </table>
+                </thead>
+                <tbody>
+                @foreach (var entry in Model.LowGranularityReport.Rows)
+                {
+                    <tr>
+                        <td>@entry.FormatedTime</td>
+                        <td>
+                            <ul>
+                                @foreach (var message in entry.Messages)
+                                {
+                                    <li>@message</li>
+                                }
+                            </ul>
+                        </td>
+                    </tr>
+                }
+                </tbody>
+            </table>
+        }
     </div>
 }
 

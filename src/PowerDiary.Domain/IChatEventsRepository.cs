@@ -1,5 +1,4 @@
 using PowerDiary.Domain.ChatEvents;
-using PowerDiary.Domain.Models;
 
 namespace PowerDiary.Domain;
 
