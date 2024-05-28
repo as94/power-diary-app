@@ -28,7 +28,7 @@ await chatRepository.AddRangeAsync(ChatEventsData.GetEventsForHighGranularity(
     bobId,
     kateId,
     roomId,
-    DateTime.Now.Date.AddHours(12)), CancellationToken.None);
+    DateTime.Now.Date.AddHours(11)), CancellationToken.None);
 
 await chatRepository.AddRangeAsync(ChatEventsData.GetEventsForLowGranularity(
     bobId,

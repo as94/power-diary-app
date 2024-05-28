@@ -28,11 +28,11 @@ public class ChatEventsRepositoryTests
         var chatEvents = ChatEventsData.GetEventsForHighGranularity(bobId, kateId, roomId, initialDateTime);
         await _repository.AddRangeAsync(chatEvents, CancellationToken.None);
         
-        var filteredEvents = await _repository.GetEventsAsync(
+        var events = await _repository.GetEventsAsync(
             initialDateTime,
             initialDateTime.AddHours(1),
             CancellationToken.None);
 
-        filteredEvents.Should().BeEquivalentTo(chatEvents);
+        events.Should().BeEquivalentTo(chatEvents);
     }
 }

@@ -35,7 +35,6 @@ public sealed class ChatEventsReporter : IChatEventsReporter
                     eventByHour.CreatedAt.Hour, 
                     0, 
                     0);
-                var formattedTime = $"{hourDateTime:hh:mmtt}";
 
                 var messages = groupByHour
                     .GroupBy(e => e.GetType().FullName)
@@ -54,8 +53,9 @@ public sealed class ChatEventsReporter : IChatEventsReporter
                         return [eventByType.GetLowGranularityReportString(groupByEventType.Count())];
                     });
 
-                return new LowGranularityReportEntryContract(formattedTime, messages.ToArray());
+                return new LowGranularityReportEntryContract(hourDateTime, messages.ToArray());
             })
+            .OrderBy(e => e.CreatingHour)
             .ToArray();
 
         return new LowGranularityReportContract(rows);
@@ -80,9 +80,10 @@ public sealed class ChatEventsReporter : IChatEventsReporter
                 var message = e.GetHighGranularityReportString(userNamesById);
                 
                 return new HighGranularityReportEntryContract(
-                    $"{e.CreatedAt:hh:mmtt}",
+                    e.CreatedAt,
                     message);
             })
+            .OrderBy(e => e.CreatedAt)
             .ToArray();
 
         return new HighGranularityReportContract(rows);
