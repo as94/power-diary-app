@@ -80,45 +80,49 @@ public static class ChatEventsData
         ];
     }
 
-    public static IChatEvent[] GetEventsForLowGranularity(Guid roomId, DateTime initialDateTime)
+    public static IChatEvent[] GetEventsForLowGranularity(
+        Guid bobId,
+        Guid kateId,
+        Guid roomId,
+        DateTime initialDateTime)
     {
         var eventsAtFirstHour = new IChatEvent[]
         {
             new UserEnteredRoom(
                 Guid.NewGuid(),
-                Guid.NewGuid(),
+                bobId,
                 roomId,
                 initialDateTime.AddMinutes(2),
                 initialDateTime.AddMinutes(2)),
             new UserLeftRoom(
                 Guid.NewGuid(),
-                Guid.NewGuid(),
+                kateId,
                 roomId,
                 initialDateTime.AddMinutes(20),
                 initialDateTime.AddMinutes(20)),
             new UserLeftRoom(
                 Guid.NewGuid(),
-                Guid.NewGuid(),
+                bobId,
                 roomId,
                 initialDateTime.AddMinutes(35),
                 initialDateTime.AddMinutes(35)),
             new UserGaveHighFive(
                 Guid.NewGuid(),
-                Guid.NewGuid(),
+                kateId,
                 Guid.NewGuid(),
                 roomId,
                 initialDateTime.AddMinutes(40),
                 initialDateTime.AddMinutes(40)),
             new UserLeftComment(
                 Guid.NewGuid(),
-                Guid.NewGuid(),
+                bobId,
                 roomId,
                 "Some comment",
                 initialDateTime.AddMinutes(50),
                 initialDateTime.AddMinutes(50)),
             new UserLeftComment(
                 Guid.NewGuid(),
-                Guid.NewGuid(),
+                bobId,
                 roomId,
                 "Some comment",
                 initialDateTime.AddMinutes(55),
@@ -126,20 +130,18 @@ public static class ChatEventsData
         };
 
         var atSecondHour = initialDateTime.AddHours(1);
-        var user1GaveHighFiveId = Guid.NewGuid();
-        var user2GaveHighFiveId = Guid.NewGuid();
 
         var eventsAtSecondHour = new IChatEvent[]
         {
             new UserEnteredRoom(
                 Guid.NewGuid(),
-                Guid.NewGuid(),
+                kateId,
                 roomId,
                 atSecondHour.AddMinutes(2),
                 atSecondHour.AddMinutes(2)),
             new UserEnteredRoom(
                 Guid.NewGuid(),
-                Guid.NewGuid(),
+                bobId,
                 roomId,
                 atSecondHour.AddMinutes(2),
                 atSecondHour.AddMinutes(2)),
@@ -151,35 +153,35 @@ public static class ChatEventsData
                 atSecondHour.AddMinutes(3)),
             new UserGaveHighFive(
                 Guid.NewGuid(),
-                user1GaveHighFiveId,
+                bobId,
                 roomId,
                 Guid.NewGuid(),
                 atSecondHour.AddMinutes(40),
                 atSecondHour.AddMinutes(40)),
             new UserGaveHighFive(
                 Guid.NewGuid(),
-                user1GaveHighFiveId,
+                bobId,
                 roomId,
                 Guid.NewGuid(),
                 atSecondHour.AddMinutes(40),
                 atSecondHour.AddMinutes(40)),
             new UserGaveHighFive(
                 Guid.NewGuid(),
-                user1GaveHighFiveId,
+                bobId,
                 roomId,
                 Guid.NewGuid(),
                 atSecondHour.AddMinutes(40),
                 atSecondHour.AddMinutes(40)),
             new UserGaveHighFive(
                 Guid.NewGuid(),
-                user2GaveHighFiveId,
+                kateId,
                 roomId,
                 Guid.NewGuid(),
                 atSecondHour.AddMinutes(50),
                 atSecondHour.AddMinutes(50)),
             new UserGaveHighFive(
                 Guid.NewGuid(),
-                user2GaveHighFiveId,
+                kateId,
                 roomId,
                 Guid.NewGuid(),
                 atSecondHour.AddMinutes(50),
@@ -187,9 +189,9 @@ public static class ChatEventsData
         }
         .Union(Enumerable.Range(0, 15).Select(x => new UserLeftComment(
             Guid.NewGuid(),
-            Guid.NewGuid(),
+            bobId,
             roomId,
-            $"Some comment {x}",
+            $"Some Bob's comment {x}",
             atSecondHour.AddMinutes(50),
             atSecondHour.AddMinutes(50))));
         

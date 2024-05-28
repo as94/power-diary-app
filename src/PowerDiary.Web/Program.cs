@@ -23,11 +23,18 @@ await userRepository.AddRangeAsync(new[]
 }, CancellationToken.None);
 
 var chatRepository = app.Services.GetRequiredService<IChatEventsRepository>();
+var roomId = Guid.NewGuid();
 await chatRepository.AddRangeAsync(ChatEventsData.GetEventsForHighGranularity(
     bobId,
     kateId,
-    Guid.NewGuid(),
-    DateTime.Now), CancellationToken.None);
+    roomId,
+    DateTime.Now.Date.AddHours(12)), CancellationToken.None);
+
+await chatRepository.AddRangeAsync(ChatEventsData.GetEventsForLowGranularity(
+    bobId,
+    kateId,
+    roomId,
+    DateTime.Now.Date.AddHours(17)), CancellationToken.None);
 
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())
