@@ -15,12 +15,42 @@ public class HomeController : Controller
     }
 
     [HttpGet]
-    public async Task<IActionResult> Index(CancellationToken ct)
+    public IActionResult Index()
     {
-        var report = await _chatEventsReporter
-            .GetHighGranularityReportAsync(DateTime.Now, ct);
+        var reportSelectionViewModel = new ReportSelectionViewModel
+        {
+            SelectedDate = DateTime.Now.Date
+        };
         
-        return View(report);
+        return View(reportSelectionViewModel);
+    }
+    
+    [HttpPost]
+    public async Task<IActionResult> GenerateReport(
+        ReportSelectionViewModel model,
+        CancellationToken ct)
+    {
+        if (model.SelectedOption == "High")
+        {
+            var report = await _chatEventsReporter
+                .GetHighGranularityReportAsync(model.SelectedDate, ct);
+
+            model.HighGranularityReport = report;
+        
+            return View("Report", model);
+        }
+        
+        if (model.SelectedOption == "Low")
+        {
+            var report = await _chatEventsReporter
+                .GetLowGranularityReportAsync(model.SelectedDate, ct);
+            
+            model.LowGranularityReport = report;
+        
+            return View("Report", model);
+        }
+
+        throw new NotSupportedException();
     }
 
     [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]

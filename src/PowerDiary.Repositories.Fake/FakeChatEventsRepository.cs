@@ -17,7 +17,7 @@ public sealed class FakeChatEventsRepository : IChatEventsRepository
     public Task<IEnumerable<IChatEvent>> GetEventsAsync(DateTime from, DateTime to, CancellationToken ct)
     {
         var filteredChatEvents = _chatEvents
-            .Where(x => x.CreatedAt >= from && x.CreatedAt <= to);
+            .Where(x => x.CreatedAt >= from && x.CreatedAt < to);
         
         return Task.FromResult(filteredChatEvents);
     }

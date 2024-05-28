@@ -1,0 +1,39 @@
+@model ReportSelectionViewModel
+
+@{
+    ViewData["Title"] = "High Granularity Report";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@if (Model.HighGranularityReport != null)
+{
+    <div class="container mt-5">
+        <h1 class="mb-4">High Granularity Report</h1>
+        <p><b>Date:</b> @Model.SelectedDate.ToShortDateString()</p>
+        @if (Model.HighGranularityReport.Rows.Length == 0)
+        {
+            <p>No rows</p>
+        }
+        else
+        {
+            <table class="table table-bordered">
+                <thead class="thead-dark">
+                <tr>
+                    <th>Formatted Time</th>
+                    <th>Message</th>
+                </tr>
+                </thead>
+                <tbody>
+                @foreach (var entry in Model.HighGranularityReport.Rows)
+                {
+                    <tr>
+                        <td>@entry.FormatedTime</td>
+                        <td>@entry.Message</td>
+                    </tr>
+                }
+                </tbody>
+            </table>
+        }
+    </div>
+}
+

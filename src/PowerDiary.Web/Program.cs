@@ -27,7 +27,7 @@ await chatRepository.AddRangeAsync(ChatEventsData.GetEventsForHighGranularity(
     bobId,
     kateId,
     Guid.NewGuid(),
-    DateTime.Now.Date), CancellationToken.None);
+    DateTime.Now), CancellationToken.None);
 
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())
