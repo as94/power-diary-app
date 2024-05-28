@@ -109,8 +109,8 @@ public static class ChatEventsData
             new UserGaveHighFive(
                 Guid.NewGuid(),
                 kateId,
-                Guid.NewGuid(),
                 roomId,
+                bobId,
                 initialDateTime.AddMinutes(40),
                 initialDateTime.AddMinutes(40)),
             new UserLeftComment(
