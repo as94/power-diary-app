@@ -9,6 +9,15 @@
     }
   },
   "profiles": {
+    "migrator": {
+      "commandName": "Project",
+      "dotnetRunMessages": true,
+      "launchBrowser": false,
+      "environmentVariables": {
+        "ASPNETCORE_ENVIRONMENT": "Development"
+      },
+      "commandLineArgs": "--update-database"
+    },
     "http": {
       "commandName": "Project",
       "dotnetRunMessages": true,

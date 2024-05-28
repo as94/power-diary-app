@@ -1,0 +1,13 @@
+version: '3.8'
+
+services:
+  mysql:
+    hostname: localhost
+    container_name: powerdiary-database
+    image: mysql:8.0
+    environment:
+      MYSQL_ROOT_HOST: '%'
+      MYSQL_ALLOW_EMPTY_PASSWORD: yes
+      MYSQL_DATABASE: powerdiary
+    ports:
+      - "3306:3306"
