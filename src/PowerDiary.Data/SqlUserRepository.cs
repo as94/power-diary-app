@@ -82,7 +82,9 @@ internal sealed class SqlUserRepository : IUserRepository
         {
             var user = await GetUserAsync(userId, connection, ct);
             if (user != null)
+            {
                 users.Add(user);
+            }
         }
 
         return users;
