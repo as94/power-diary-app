@@ -41,16 +41,7 @@ public sealed class ChatEventsReporter : IChatEventsReporter
                     .SelectMany(groupByEventType =>
                     {
                         var eventByType = groupByEventType.First();
-                        
-                        if (groupByEventType.Key == typeof(UserGaveHighFive).FullName)
-                        {
-                            return groupByEventType
-                                .GroupBy(e => e.UserId)
-                                .Select(e => eventByType
-                                    .GetLowGranularityReportString(e.Count()));
-                        }
-
-                        return [eventByType.GetLowGranularityReportString(groupByEventType.Count())];
+                        return eventByType.GetAggregatedReportStrings(groupByEventType);
                     });
 
                 return new LowGranularityReportEntryContract(hourDateTime, messages.ToArray());

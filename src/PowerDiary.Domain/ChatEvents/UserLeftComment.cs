@@ -29,4 +29,9 @@ public sealed class UserLeftComment : IChatEvent
     }
     
     public string GetLowGranularityReportString(int count) => $"{count} comments";
+    
+    public IEnumerable<string> GetAggregatedReportStrings(IEnumerable<IChatEvent> events)
+    {
+        return new[] { GetLowGranularityReportString(events.Count()) };
+    }
 }

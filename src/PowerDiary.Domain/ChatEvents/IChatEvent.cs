@@ -10,4 +10,6 @@ public interface IChatEvent
 
     public string GetHighGranularityReportString(Dictionary<Guid, string> userNamesById);
     public string GetLowGranularityReportString(int count);
+
+    public IEnumerable<string> GetAggregatedReportStrings(IEnumerable<IChatEvent> events);
 }

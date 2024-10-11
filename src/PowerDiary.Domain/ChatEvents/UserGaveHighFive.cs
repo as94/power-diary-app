@@ -38,4 +38,11 @@ public sealed class UserGaveHighFive : IChatEvent
             ? $"1 person high-fived {count} other person"
             : $"1 person high-fived {count} other people";
     }
+    
+    public IEnumerable<string> GetAggregatedReportStrings(IEnumerable<IChatEvent> events)
+    {
+        return events
+            .GroupBy(e => e.UserId)
+            .Select(group => GetLowGranularityReportString(group.Count()));
+    }
 }

@@ -32,4 +32,9 @@ public sealed class UserEnteredRoom : IChatEvent
             ? $"{count} person entered"
             : $"{count} people entered";
     }
+    
+    public IEnumerable<string> GetAggregatedReportStrings(IEnumerable<IChatEvent> events)
+    {
+        return new[] { GetLowGranularityReportString(events.Count()) };
+    }
 }
